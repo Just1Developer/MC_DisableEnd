@@ -1,0 +1,8 @@
+name: DisableEnd
+version: '1.0-SNAPSHOT'
+main: net.justonedev.mc.DisableEnd
+api-version: '1.21'
+author: JustOneDeveloper
+commands:
+  disableend:
+  test:
