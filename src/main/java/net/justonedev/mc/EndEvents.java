@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -22,7 +23,7 @@ public class EndEvents implements Listener {
     @EventHandler
     public void onPlaceEndereye(PlayerInteractEvent e) {
         if (!DisableEnd.CURRENT_END_DISABLED) return;
-        if (e.getPlayer().getGameMode() == GameMode.CREATIVE && e.getPlayer().isOp()) return;
+        if (DisableEnd.CURRENT_BYPASS_CREATIVE_ADMINS && e.getPlayer().getGameMode() == GameMode.CREATIVE && e.getPlayer().isOp()) return;
         if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
         if (e.getItem() == null) return;
         if (e.getItem().getType() != Material.ENDER_EYE) return;
@@ -40,9 +41,8 @@ public class EndEvents implements Listener {
     public void onChangeWorld(PlayerChangedWorldEvent e) {
         if (!DisableEnd.CURRENT_END_DISABLED) return;
         if (!DisableEnd.CURRENT_DENY_TELEPORT) return;
-        World w = e.getPlayer().getWorld();
-        if (!w.getEnvironment().equals(World.Environment.THE_END)) return;
-        Player p = e.getPlayer();
+        Player p = continueEvent(e);
+        if (p == null) return;
         if (!DisableEnd.CURRENT_MSG_DENY_WORLD_TP.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_DENY_WORLD_TP);
         World defaultWorld = Bukkit.getWorlds().getFirst();
         if (defaultWorld == null && p.getRespawnLocation() == null) return;
@@ -53,13 +53,19 @@ public class EndEvents implements Listener {
     public void onMove(PlayerMoveEvent e) {
         if (!DisableEnd.CURRENT_END_DISABLED) return;
         if (!DisableEnd.CURRENT_KICK_PLAYERS) return;
-        World w = e.getPlayer().getWorld();
-        if (!w.getEnvironment().equals(World.Environment.THE_END)) return;
-        Player p = e.getPlayer();
+        Player p = continueEvent(e);
+        if (p == null) return;
         if (!DisableEnd.CURRENT_MSG_KICK_FROM_END.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_END);
         World defaultWorld = Bukkit.getWorlds().getFirst();
         if (defaultWorld == null && p.getRespawnLocation() == null) return;
         p.teleport(p.getRespawnLocation() == null ? Objects.requireNonNull(defaultWorld).getSpawnLocation() : p.getRespawnLocation());
+    }
+
+    private static Player continueEvent(PlayerEvent e) {
+        if (DisableEnd.CURRENT_BYPASS_CREATIVE_ADMINS && e.getPlayer().getGameMode() == GameMode.CREATIVE && e.getPlayer().isOp()) return null;
+        World w = e.getPlayer().getWorld();
+        if (!w.getEnvironment().equals(World.Environment.THE_END)) return null;
+        return e.getPlayer();
     }
 
 }

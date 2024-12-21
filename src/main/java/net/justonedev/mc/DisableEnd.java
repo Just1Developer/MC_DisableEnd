@@ -13,6 +13,7 @@ public final class DisableEnd extends JavaPlugin {
     public static final boolean DEFAULT_END_DISABLED = false;
     public static final boolean DEFAULT_DENY_TELEPORT = true;
     public static final boolean DEFAULT_KICK_PLAYERS = true;
+    public static final boolean DEFAULT_BYPASS_CREATIVE_ADMINS = true;
 
     public static final String DEFAULT_MSG_DENY_WORLD_TP = "&7Whew. It was all a dream.";
     public static final String DEFAULT_MSG_KICK_FROM_END = "&cThe End is currently disabled.";
@@ -20,6 +21,8 @@ public final class DisableEnd extends JavaPlugin {
     public static boolean CURRENT_END_DISABLED;
     public static boolean CURRENT_DENY_TELEPORT;
     public static boolean CURRENT_KICK_PLAYERS;
+
+    public static boolean CURRENT_BYPASS_CREATIVE_ADMINS;
 
     public static String CURRENT_MSG_DENY_WORLD_TP;
     public static String CURRENT_MSG_KICK_FROM_END;
