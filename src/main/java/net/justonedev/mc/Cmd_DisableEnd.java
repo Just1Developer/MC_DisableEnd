@@ -86,7 +86,7 @@ public class Cmd_DisableEnd implements CommandExecutor, TabCompleter {
                 DisableEnd.CURRENT_END_DISABLED = value;
                 Config.updateDisableEnd();
                 commandSender.sendMessage((DisableEnd.CURRENT_END_DISABLED ? "§cDisabled" : "§aEnabled") + "§e the End Dimension%s".formatted(value ?
-                        " (Deny Teleport: %s§e, Kick Players: %s§e)".formatted(getBoolean(DisableEnd.CURRENT_DENY_TELEPORT), getBoolean(DisableEnd.CURRENT_KICK_PLAYERS)) : ""));
+                        " (Deny Teleport: %s§e, Kick Players: %s§e, Admin Bypass: %s§e)".formatted(getBoolean(DisableEnd.CURRENT_DENY_TELEPORT), getBoolean(DisableEnd.CURRENT_KICK_PLAYERS), getBoolean(DisableEnd.CURRENT_BYPASS_CREATIVE_ADMINS)) : ""));
             }
         }
 
