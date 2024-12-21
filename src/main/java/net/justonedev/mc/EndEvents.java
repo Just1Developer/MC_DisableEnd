@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.data.type.EndPortalFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,11 +30,18 @@ public class EndEvents implements Listener {
         if (e.getItem().getType() != Material.ENDER_EYE) return;
         if (e.getClickedBlock() == null) return;
         if (e.getClickedBlock().getType() != Material.END_PORTAL_FRAME) return;
+        if (((EndPortalFrame) e.getClickedBlock().getBlockData()).hasEye()) return;
 
         Player p = e.getPlayer();
         p.playSound(p, Sound.ITEM_TOTEM_USE, 1, 1);
-        Location loc = e.getClickedBlock().getLocation().add(0, 0.35, 0);
-        if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.SMOKE, loc, 65);
+        Location loc = e.getClickedBlock().getLocation().add(0.5, 0.75, 0.5);
+
+        // Valid ones: Particle.FLASH, Particle.INFESTED, Particle.POOF
+        // Maybe: (Particle.EXPLOSION, Particle.EXPLOSION_EMITTER)
+
+        if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.FLASH, loc, 65);
+        if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.INFESTED, loc, 75);
+        if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.POOF, loc, 25);
         e.setCancelled(true);
     }
 
