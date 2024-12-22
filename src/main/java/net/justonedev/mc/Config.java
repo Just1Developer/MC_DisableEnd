@@ -14,6 +14,8 @@ public class Config {
     private static final String KEY_DENY_WORLD_TP = "Deny End World Teleportation";
     private static final String KEY_KICK_PLAYERS = "Kick players out of the end";
     private static final String KEY_BYPASS = "Bypass for Admins in Creative Mode";
+    private static final String KEY_PARTICLES = "Particles when denied placement of ender eye";
+    private static final String KEY_SOUND = "Sound effect when denied placement of ender eye";
     private static final String KEY_MSG_DENY_WORLD_TP = "messages.Denied End Teleportation";
     private static final String KEY_MSG_KICK_FROM_END = "messages.Kicked from End";
 
@@ -27,6 +29,8 @@ public class Config {
             cfg.set(KEY_DENY_WORLD_TP, DisableEnd.DEFAULT_DENY_TELEPORT);
             cfg.set(KEY_KICK_PLAYERS, DisableEnd.DEFAULT_KICK_PLAYERS);
             cfg.set(KEY_BYPASS, DisableEnd.DEFAULT_KICK_PLAYERS);
+            cfg.set(KEY_PARTICLES, DisableEnd.DEFAULT_DO_PARTICLES);
+            cfg.set(KEY_SOUND, DisableEnd.DEFAULT_DO_DENY_SOUNDS);
             cfg.set(KEY_MSG_DENY_WORLD_TP, DisableEnd.DEFAULT_MSG_DENY_WORLD_TP);
             cfg.set(KEY_MSG_KICK_FROM_END, DisableEnd.DEFAULT_MSG_KICK_FROM_END);
             saveCfg(f, cfg);
@@ -39,6 +43,9 @@ public class Config {
         DisableEnd.CURRENT_DENY_TELEPORT = getOrDefaultBoolean(KEY_DENY_WORLD_TP, cfg, updateThese, DisableEnd.DEFAULT_DENY_TELEPORT);
         DisableEnd.CURRENT_KICK_PLAYERS = getOrDefaultBoolean(KEY_KICK_PLAYERS, cfg, updateThese, DisableEnd.DEFAULT_KICK_PLAYERS);
         DisableEnd.CURRENT_BYPASS_CREATIVE_ADMINS = getOrDefaultBoolean(KEY_BYPASS, cfg, updateThese, DisableEnd.DEFAULT_BYPASS_CREATIVE_ADMINS);
+
+        DisableEnd.CURRENT_DO_PARTICLES = getOrDefaultBoolean(KEY_PARTICLES, cfg, updateThese, DisableEnd.DEFAULT_DO_PARTICLES);
+        DisableEnd.CURRENT_DO_DENY_SOUNDS = getOrDefaultBoolean(KEY_SOUND, cfg, updateThese, DisableEnd.DEFAULT_DO_DENY_SOUNDS);
 
         DisableEnd.CURRENT_MSG_DENY_WORLD_TP = ChatColor.translateAlternateColorCodes('&', getOrDefaultString(KEY_MSG_DENY_WORLD_TP, cfg, updateThese, DisableEnd.DEFAULT_MSG_DENY_WORLD_TP));
         DisableEnd.CURRENT_MSG_KICK_FROM_END = ChatColor.translateAlternateColorCodes('&', getOrDefaultString(KEY_MSG_KICK_FROM_END, cfg, updateThese, DisableEnd.DEFAULT_MSG_KICK_FROM_END));

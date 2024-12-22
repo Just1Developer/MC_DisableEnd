@@ -33,15 +33,20 @@ public class EndEvents implements Listener {
         if (((EndPortalFrame) e.getClickedBlock().getBlockData()).hasEye()) return;
 
         Player p = e.getPlayer();
-        p.playSound(p, Sound.ITEM_TOTEM_USE, 1, 1);
-        Location loc = e.getClickedBlock().getLocation().add(0.5, 0.75, 0.5);
+
+        if (DisableEnd.CURRENT_DO_DENY_SOUNDS) {
+            p.playSound(p, Sound.ITEM_TOTEM_USE, 0.8f, 1);
+        }
 
         // Valid ones: Particle.FLASH, Particle.INFESTED, Particle.POOF
         // Maybe: (Particle.EXPLOSION, Particle.EXPLOSION_EMITTER)
 
-        if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.FLASH, loc, 65);
-        if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.INFESTED, loc, 75);
-        if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.POOF, loc, 25);
+        if (DisableEnd.CURRENT_DO_PARTICLES) {
+            Location loc = e.getClickedBlock().getLocation().add(0.5, 0.75, 0.5);
+            if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.FLASH, loc, 65);
+            if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.INFESTED, loc, 75);
+            if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.POOF, loc, 25);
+        }
         e.setCancelled(true);
     }
 
