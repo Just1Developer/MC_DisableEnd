@@ -20,9 +20,22 @@ public final class DisableEnd extends JavaPlugin {
     public static final String DEFAULT_MSG_DENY_WORLD_TP = "&7Whew. It was all a dream.";
     public static final String DEFAULT_MSG_KICK_FROM_END = "&cThe End is currently disabled.";
 
+    public static final boolean DEFAULT_NETHER_DISABLED = false;
+    public static final boolean DEFAULT_NETHER_DENY_TELEPORT = true;
+    public static final boolean DEFAULT_NETHER_KICK_PLAYERS = true;
+    public static final boolean DEFAULT_ALLOW_NETHER_EXIT = true;
+
+    public static final String DEFAULT_MSG_DENY_NETHER_TP = "&7Whew. It was all a dream.";
+    public static final String DEFAULT_MSG_KICK_FROM_NETHER = "&cThe Nether is currently disabled.";
+
     public static boolean CURRENT_END_DISABLED;
     public static boolean CURRENT_DENY_TELEPORT;
     public static boolean CURRENT_KICK_PLAYERS;
+
+    public static boolean CURRENT_NETHER_DISABLED;
+    public static boolean CURRENT_DENY_NETHER_TELEPORT;
+    public static boolean CURRENT_KICK_NETHER_PLAYERS;
+    public static boolean CURRENT_ALLOW_NETHER_EXIT;
 
     public static boolean CURRENT_BYPASS_CREATIVE_ADMINS;
     public static boolean CURRENT_DO_PARTICLES;
@@ -31,15 +44,24 @@ public final class DisableEnd extends JavaPlugin {
     public static String CURRENT_MSG_DENY_WORLD_TP;
     public static String CURRENT_MSG_KICK_FROM_END;
 
+    public static String CURRENT_MSG_DENY_NETHER_TP;
+    public static String CURRENT_MSG_KICK_FROM_NETHER;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
         singleton = this;
         Config.initialize();
-        Cmd_DisableEnd cmd = new Cmd_DisableEnd();
-        Objects.requireNonNull(getCommand("disableend")).setExecutor(cmd);
-        Objects.requireNonNull(getCommand("disableend")).setTabCompleter(cmd);
+        Cmd_DisableEnd cmdDisableEnd = new Cmd_DisableEnd();
+        Objects.requireNonNull(getCommand("disableend")).setExecutor(cmdDisableEnd);
+        Objects.requireNonNull(getCommand("disableend")).setTabCompleter(cmdDisableEnd);
+
+        Cmd_DisableNether cmdDisableNether = new Cmd_DisableNether();
+        Objects.requireNonNull(getCommand("disablenether")).setExecutor(cmdDisableNether);
+        Objects.requireNonNull(getCommand("disablenether")).setTabCompleter(cmdDisableNether);
+
         Bukkit.getPluginManager().registerEvents(new EndEvents(), this);
+        //Bukkit.getPluginManager().registerEvents(new NetherEvents(), this);
     }
 
     @Override

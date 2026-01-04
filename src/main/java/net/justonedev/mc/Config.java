@@ -19,6 +19,13 @@ public class Config {
     private static final String KEY_MSG_DENY_WORLD_TP = "messages.Denied End Teleportation";
     private static final String KEY_MSG_KICK_FROM_END = "messages.Kicked from End";
 
+    private static final String KEY_NETHER_DISABLED = "Nether disabled";
+    private static final String KEY_NETHER_DENY_WORLD_TP = "Deny Nether World Teleportation";
+    private static final String KEY_NETHER_KICK_PLAYERS = "Kick players out of the nether";
+    private static final String KEY_MSG_ALLOW_EXIT = "Allow portals in nether anyway (for exiting)";
+    private static final String KEY_MSG_DENY_NETHER_TP = "messages.Denied Nether Teleportation";
+    private static final String KEY_MSG_KICK_FROM_NETHER = "messages.Kicked from Nether";
+
     public static void initialize() {
         File f = new File(DisableEnd.getFolder(), "config.yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(f);
@@ -33,6 +40,13 @@ public class Config {
             cfg.set(KEY_SOUND, DisableEnd.DEFAULT_DO_DENY_SOUNDS);
             cfg.set(KEY_MSG_DENY_WORLD_TP, DisableEnd.DEFAULT_MSG_DENY_WORLD_TP);
             cfg.set(KEY_MSG_KICK_FROM_END, DisableEnd.DEFAULT_MSG_KICK_FROM_END);
+
+            cfg.set(KEY_NETHER_DISABLED, DisableEnd.DEFAULT_NETHER_DISABLED);
+            cfg.set(KEY_NETHER_DENY_WORLD_TP, DisableEnd.DEFAULT_NETHER_DENY_TELEPORT);
+            cfg.set(KEY_NETHER_KICK_PLAYERS, DisableEnd.DEFAULT_NETHER_KICK_PLAYERS);
+            cfg.set(KEY_MSG_ALLOW_EXIT, DisableEnd.DEFAULT_ALLOW_NETHER_EXIT);
+            cfg.set(KEY_MSG_DENY_NETHER_TP, DisableEnd.DEFAULT_MSG_DENY_NETHER_TP);
+            cfg.set(KEY_MSG_KICK_FROM_NETHER, DisableEnd.DEFAULT_MSG_KICK_FROM_NETHER);
             saveCfg(f, cfg);
             return;
         }
@@ -49,6 +63,16 @@ public class Config {
 
         DisableEnd.CURRENT_MSG_DENY_WORLD_TP = ChatColor.translateAlternateColorCodes('&', getOrDefaultString(KEY_MSG_DENY_WORLD_TP, cfg, updateThese, DisableEnd.DEFAULT_MSG_DENY_WORLD_TP));
         DisableEnd.CURRENT_MSG_KICK_FROM_END = ChatColor.translateAlternateColorCodes('&', getOrDefaultString(KEY_MSG_KICK_FROM_END, cfg, updateThese, DisableEnd.DEFAULT_MSG_KICK_FROM_END));
+
+        // Nether
+
+        DisableEnd.CURRENT_NETHER_DISABLED = getOrDefaultBoolean(KEY_NETHER_DISABLED, cfg, updateThese, DisableEnd.DEFAULT_NETHER_DISABLED);
+        DisableEnd.CURRENT_DENY_NETHER_TELEPORT = getOrDefaultBoolean(KEY_NETHER_DENY_WORLD_TP, cfg, updateThese, DisableEnd.DEFAULT_NETHER_DENY_TELEPORT);
+        DisableEnd.CURRENT_KICK_NETHER_PLAYERS = getOrDefaultBoolean(KEY_NETHER_KICK_PLAYERS, cfg, updateThese, DisableEnd.DEFAULT_NETHER_KICK_PLAYERS);
+        DisableEnd.CURRENT_ALLOW_NETHER_EXIT = getOrDefaultBoolean(KEY_MSG_ALLOW_EXIT, cfg, updateThese, DisableEnd.DEFAULT_ALLOW_NETHER_EXIT);
+
+        DisableEnd.CURRENT_MSG_DENY_NETHER_TP = ChatColor.translateAlternateColorCodes('&', getOrDefaultString(KEY_MSG_DENY_NETHER_TP, cfg, updateThese, DisableEnd.DEFAULT_MSG_DENY_NETHER_TP));
+        DisableEnd.CURRENT_MSG_KICK_FROM_NETHER = ChatColor.translateAlternateColorCodes('&', getOrDefaultString(KEY_MSG_KICK_FROM_NETHER, cfg, updateThese, DisableEnd.DEFAULT_MSG_KICK_FROM_NETHER));
 
         if (updateThese.isEmpty()) return;
         cfg = YamlConfiguration.loadConfiguration(f);	// Reload config
