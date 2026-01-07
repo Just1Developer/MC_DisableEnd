@@ -109,6 +109,7 @@ public class Config {
         File f = new File(DisableEnd.getFolder(), "config.yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(f);
         cfg.set(KEY_END_DISABLED, DisableEnd.CURRENT_END_DISABLED);
+        cfg.set(KEY_NETHER_DISABLED, DisableEnd.CURRENT_NETHER_DISABLED);
         saveCfg(f, cfg);
     }
 
@@ -116,6 +117,7 @@ public class Config {
         File f = new File(DisableEnd.getFolder(), "config.yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(f);
         cfg.set(KEY_DENY_WORLD_TP, DisableEnd.CURRENT_DENY_TELEPORT);
+        cfg.set(KEY_NETHER_DENY_WORLD_TP, DisableEnd.CURRENT_DENY_NETHER_TELEPORT);
         saveCfg(f, cfg);
     }
 
@@ -123,6 +125,7 @@ public class Config {
         File f = new File(DisableEnd.getFolder(), "config.yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(f);
         cfg.set(KEY_KICK_PLAYERS, DisableEnd.CURRENT_KICK_PLAYERS);
+        cfg.set(KEY_NETHER_KICK_PLAYERS, DisableEnd.CURRENT_KICK_NETHER_PLAYERS);
         saveCfg(f, cfg);
     }
 

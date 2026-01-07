@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public final class DisableEnd extends JavaPlugin {
 
-    private static DisableEnd singleton;
+    public static DisableEnd instance;
 
     public static final boolean DEFAULT_END_DISABLED = false;
     public static final boolean DEFAULT_DENY_TELEPORT = true;
@@ -50,7 +50,7 @@ public final class DisableEnd extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        singleton = this;
+        instance = this;
         Config.initialize();
         Cmd_DisableEnd cmdDisableEnd = new Cmd_DisableEnd();
         Objects.requireNonNull(getCommand("disableend")).setExecutor(cmdDisableEnd);
@@ -61,7 +61,7 @@ public final class DisableEnd extends JavaPlugin {
         Objects.requireNonNull(getCommand("disablenether")).setTabCompleter(cmdDisableNether);
 
         Bukkit.getPluginManager().registerEvents(new EndEvents(), this);
-        //Bukkit.getPluginManager().registerEvents(new NetherEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new NetherEvents(), this);
     }
 
     @Override
@@ -70,6 +70,6 @@ public final class DisableEnd extends JavaPlugin {
     }
 
     public static File getFolder() {
-        return singleton.getDataFolder();
+        return instance.getDataFolder();
     }
 }
