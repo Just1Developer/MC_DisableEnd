@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Cmd_DisableEnd implements CommandExecutor, TabCompleter {
+public class Cmd_DisableEnd implements CommandExecutor {
 
     private static final Pattern STATUS_REGEX = Pattern.compile("^(true|false|status)$");
     private static final Pattern SUBCOMMANDS_REGEX = Pattern.compile("^(denyteleport|kickplayers)$");
@@ -32,6 +32,12 @@ public class Cmd_DisableEnd implements CommandExecutor, TabCompleter {
         if (args.length == 0) {
             sendSyntax(commandSender);
             return false;
+        }
+
+        if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+            Config.initialize();
+            commandSender.sendMessage("§eReloaded configuration.");
+            return true;
         }
 
         if (args.length == 2) {
@@ -91,20 +97,6 @@ public class Cmd_DisableEnd implements CommandExecutor, TabCompleter {
         }
 
         return true;
-    }
-
-    // Arguments are /command arg0 arg1 etc., but args are present and empty for the current one. So: /argslength here=1 here=2 here=3 4 ...
-
-    @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String label, String[] args) {
-        if (!commandSender.isOp() || args.length > 2) return List.of();
-        else if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("denyTeleport") || args[0].equalsIgnoreCase("kickPlayers")) {
-                return List.of("true", "false", "status");
-            }
-            return List.of();
-        }
-        return List.of("true", "false", "status", "denyTeleport", "kickPlayers");
     }
 
     private static void sendSyntax(CommandSender commandSender) {
