@@ -34,7 +34,7 @@ public class NetherEvents implements Listener {
 
     @EventHandler
     public void onEntityEnterPortal(EntityPortalEnterEvent e) {
-        handlePortalEntered(e.getLocation().getBlock(), e.getEntity(), "§f");
+        handlePortalEntered(e.getLocation().getBlock(), e.getEntity());
     }
 
     @EventHandler
@@ -54,7 +54,7 @@ public class NetherEvents implements Listener {
         if (!DisableEnd.CURRENT_NETHER_DISABLED) return;
         Block block = e.getPlayer().getLocation().getBlock();
 
-        handlePortalEntered(block, e.getPlayer(), "§e");
+        handlePortalEntered(block, e.getPlayer());
     }
 
     private static boolean isNotInNether(PlayerEvent e) {
@@ -84,37 +84,26 @@ public class NetherEvents implements Listener {
     }
 
     private static void handlePortalEntered(Block portalBlock, Entity entity) {
-        handlePortalEntered(portalBlock, entity, "§f");
-    }
-    private static void handlePortalEntered(Block portalBlock, Entity entity, String color) {
-        Bukkit.broadcastMessage(color + "1");
         if (!DisableEnd.CURRENT_NETHER_DISABLED) return;
-        Bukkit.broadcastMessage(color + "2");
 
         if (isBypass(entity)) return;
-        Bukkit.broadcastMessage(color + "3");
 
         boolean notInNether = isNotInNether(portalBlock.getWorld());
 
         if ((notInNether || !DisableEnd.CURRENT_ALLOW_NETHER_EXIT) && portalBlock.getType() == Material.NETHER_PORTAL) {
-            Bukkit.broadcastMessage(color + "4a");
             // Not in nether -> destroy portal
             breakPortal(portalBlock);
         } else if (!notInNether && DisableEnd.CURRENT_KICK_NETHER_PLAYERS) {
-            Bukkit.broadcastMessage(color + "4b");
             // Nether is disabled, but player is in Nether
             if (!DisableEnd.CURRENT_MSG_KICK_FROM_NETHER.isBlank()) entity.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_NETHER);
-            Bukkit.broadcastMessage(color + "5b");
 
             World defaultWorld = Bukkit.getWorlds().getFirst();
             if (defaultWorld == null && (!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null)) return;
-            Bukkit.broadcastMessage(color + "6b");
 
             entity.teleport(!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null
                     ? Objects.requireNonNull(defaultWorld).getSpawnLocation()
                     : ((Player) entity).getRespawnLocation());
         }
-        Bukkit.broadcastMessage(color + "7");
     }
 
     private static void breakPortal(Block portalBlock) {
