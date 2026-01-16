@@ -43,11 +43,22 @@ public class EndEvents implements Listener {
 
         if (DisableEnd.CURRENT_DO_PARTICLES) {
             Location loc = e.getClickedBlock().getLocation().add(0.5, 0.75, 0.5);
-            if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.FLASH, loc, 65);
-            if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.INFESTED, loc, 75);
-            if (loc.getWorld() != null) loc.getWorld().spawnParticle(Particle.POOF, loc, 25);
+            trySpawnParticle(Particle.FLASH, loc, 65);
+            trySpawnParticle(Particle.INFESTED, loc, 75);
+            trySpawnParticle(Particle.POOF, loc, 25);
         }
         e.setCancelled(true);
+    }
+    private void trySpawnParticle(Particle particle, Location location, int count) {
+        trySpawnParticle(particle, location, count, false);
+    }
+    private void trySpawnParticle(Particle particle, Location location, int count, boolean printStackTrace) {
+        if (location.getWorld() == null) return;
+        try {
+            location.getWorld().spawnParticle(particle, location, count);
+        } catch (IllegalArgumentException e) {
+            if (printStackTrace) e.printStackTrace();
+        }
     }
 
     @EventHandler
