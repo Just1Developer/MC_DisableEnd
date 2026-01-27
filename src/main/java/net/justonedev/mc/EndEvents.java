@@ -68,7 +68,7 @@ public class EndEvents implements Listener {
         Player p = continueEvent(e);
         if (p == null) return;
         if (!DisableEnd.CURRENT_MSG_DENY_WORLD_TP.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_DENY_WORLD_TP);
-        World defaultWorld = Bukkit.getWorlds().getFirst();
+        World defaultWorld = DisableEnd.getDefaultWorld();
         if (defaultWorld == null && p.getRespawnLocation() == null) return;
         p.teleport(p.getRespawnLocation() == null ? Objects.requireNonNull(defaultWorld).getSpawnLocation() : p.getRespawnLocation());
     }
@@ -80,7 +80,7 @@ public class EndEvents implements Listener {
         Player p = continueEvent(e);
         if (p == null) return;
         if (!DisableEnd.CURRENT_MSG_KICK_FROM_END.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_END);
-        World defaultWorld = Bukkit.getWorlds().getFirst();
+        World defaultWorld = DisableEnd.getDefaultWorld();
         if (defaultWorld == null && p.getRespawnLocation() == null) return;
         p.teleport(p.getRespawnLocation() == null ? Objects.requireNonNull(defaultWorld).getSpawnLocation() : p.getRespawnLocation());
     }

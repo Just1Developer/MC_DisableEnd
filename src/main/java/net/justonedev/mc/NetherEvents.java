@@ -44,7 +44,7 @@ public class NetherEvents implements Listener {
         Player p = continueEvent(e);
         if (p == null) return;
         if (!DisableEnd.CURRENT_MSG_DENY_NETHER_TP.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_DENY_NETHER_TP);
-        World defaultWorld = Bukkit.getWorlds().getFirst();
+        World defaultWorld = DisableEnd.getDefaultWorld();
         if (defaultWorld == null && p.getRespawnLocation() == null) return;
         p.teleport(p.getRespawnLocation() == null ? Objects.requireNonNull(defaultWorld).getSpawnLocation() : p.getRespawnLocation());
     }
@@ -97,7 +97,7 @@ public class NetherEvents implements Listener {
             // Nether is disabled, but player is in Nether
             if (!DisableEnd.CURRENT_MSG_KICK_FROM_NETHER.isBlank()) entity.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_NETHER);
 
-            World defaultWorld = Bukkit.getWorlds().getFirst();
+            World defaultWorld = DisableEnd.getDefaultWorld();
             if (defaultWorld == null && (!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null)) return;
 
             entity.teleport(!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null

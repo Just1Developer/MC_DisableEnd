@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class Config {
 
+    private static final String KEY_DEFAULT_WORLD_NAME = "Default world name (if different from the overworld)";
+
     private static final String KEY_END_DISABLED = "End disabled";
     private static final String KEY_DENY_WORLD_TP = "Deny End World Teleportation";
     private static final String KEY_KICK_PLAYERS = "Kick players out of the end";
@@ -32,6 +34,8 @@ public class Config {
 
         if (!f.exists()) {
             // Default Values are already set
+            cfg.set(KEY_DEFAULT_WORLD_NAME, DisableEnd.DEFAULT_END_DISABLED);
+
             cfg.set(KEY_END_DISABLED, DisableEnd.DEFAULT_END_DISABLED);
             cfg.set(KEY_DENY_WORLD_TP, DisableEnd.DEFAULT_DENY_TELEPORT);
             cfg.set(KEY_KICK_PLAYERS, DisableEnd.DEFAULT_KICK_PLAYERS);
@@ -52,6 +56,8 @@ public class Config {
         }
 
         Map<String, Object> updateThese = new HashMap<>();
+
+        DisableEnd.CURRENT_DEFAULT_WORLD_NAME = getOrDefaultString(KEY_DEFAULT_WORLD_NAME, cfg, updateThese, DisableEnd.DEFAULT_WORLD_NAME);
 
         DisableEnd.CURRENT_END_DISABLED = getOrDefaultBoolean(KEY_END_DISABLED, cfg, updateThese, DisableEnd.DEFAULT_END_DISABLED);
         DisableEnd.CURRENT_DENY_TELEPORT = getOrDefaultBoolean(KEY_DENY_WORLD_TP, cfg, updateThese, DisableEnd.DEFAULT_DENY_TELEPORT);

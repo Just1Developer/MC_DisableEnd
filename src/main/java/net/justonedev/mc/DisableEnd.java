@@ -1,6 +1,7 @@
 package net.justonedev.mc;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -9,6 +10,8 @@ import java.util.Objects;
 public final class DisableEnd extends JavaPlugin {
 
     public static DisableEnd instance;
+
+    public static final String DEFAULT_WORLD_NAME = "";
 
     public static final boolean DEFAULT_END_DISABLED = false;
     public static final boolean DEFAULT_DENY_TELEPORT = true;
@@ -27,6 +30,8 @@ public final class DisableEnd extends JavaPlugin {
 
     public static final String DEFAULT_MSG_DENY_NETHER_TP = "&7Whew. It was all a dream.";
     public static final String DEFAULT_MSG_KICK_FROM_NETHER = "&cThe Nether is currently disabled.";
+
+    public static String CURRENT_DEFAULT_WORLD_NAME;
 
     public static boolean CURRENT_END_DISABLED;
     public static boolean CURRENT_DENY_TELEPORT;
@@ -52,13 +57,15 @@ public final class DisableEnd extends JavaPlugin {
         // Plugin startup logic
         instance = this;
         Config.initialize();
+        DimensionCommandTabCompleter tabCompleter = new DimensionCommandTabCompleter();
+
         Cmd_DisableEnd cmdDisableEnd = new Cmd_DisableEnd();
         Objects.requireNonNull(getCommand("disableend")).setExecutor(cmdDisableEnd);
-        Objects.requireNonNull(getCommand("disableend")).setTabCompleter(cmdDisableEnd);
+        Objects.requireNonNull(getCommand("disableend")).setTabCompleter(tabCompleter);
 
         Cmd_DisableNether cmdDisableNether = new Cmd_DisableNether();
         Objects.requireNonNull(getCommand("disablenether")).setExecutor(cmdDisableNether);
-        Objects.requireNonNull(getCommand("disablenether")).setTabCompleter(cmdDisableNether);
+        Objects.requireNonNull(getCommand("disablenether")).setTabCompleter(tabCompleter);
 
         Bukkit.getPluginManager().registerEvents(new EndEvents(), this);
         Bukkit.getPluginManager().registerEvents(new NetherEvents(), this);
@@ -71,5 +78,13 @@ public final class DisableEnd extends JavaPlugin {
 
     public static File getFolder() {
         return instance.getDataFolder();
+    }
+
+    public static World getDefaultWorld() {
+        if (CURRENT_DEFAULT_WORLD_NAME != null && !CURRENT_DEFAULT_WORLD_NAME.isBlank()) {
+            World world = Bukkit.getWorld(CURRENT_DEFAULT_WORLD_NAME);
+            if (world != null) return world;
+        }
+        return Bukkit.getWorlds().getFirst();
     }
 }
