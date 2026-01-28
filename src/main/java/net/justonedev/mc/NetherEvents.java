@@ -19,7 +19,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 
 import java.util.List;
-import java.util.Objects;
 
 public class NetherEvents implements Listener {
 
