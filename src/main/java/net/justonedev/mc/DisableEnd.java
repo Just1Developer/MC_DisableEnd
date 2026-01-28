@@ -1,7 +1,9 @@
 package net.justonedev.mc;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -80,6 +82,13 @@ public final class DisableEnd extends JavaPlugin {
 
     public static File getFolder() {
         return instance.getDataFolder();
+    }
+
+    public static Location getPlayerTeleportLocation(Player p) {
+        if (!CURRENT_SEND_PLAYERS_TO_WORLD_SPAWN && p.getRespawnLocation() != null) {
+            return p.getRespawnLocation();
+        }
+        return getDefaultWorld().getSpawnLocation();
     }
 
     public static World getDefaultWorld() {

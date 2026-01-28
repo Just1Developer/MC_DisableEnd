@@ -1,6 +1,7 @@
 package net.justonedev.mc;
 
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -45,9 +46,9 @@ public class NetherEvents implements Listener {
         Player p = continueEvent(e);
         if (p == null) return;
         if (!DisableEnd.CURRENT_MSG_DENY_NETHER_TP.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_DENY_NETHER_TP);
-        World defaultWorld = DisableEnd.getDefaultWorld();
-        if (defaultWorld == null && p.getRespawnLocation() == null) return;
-        p.teleport(p.getRespawnLocation() == null ? Objects.requireNonNull(defaultWorld).getSpawnLocation() : p.getRespawnLocation());
+        Location teleportLocation = DisableEnd.getPlayerTeleportLocation(p);
+        if (teleportLocation == null) return;
+        p.teleport(teleportLocation);
     }
 
     @EventHandler
@@ -104,9 +105,11 @@ public class NetherEvents implements Listener {
             World defaultWorld = DisableEnd.getDefaultWorld();
             if (defaultWorld == null && (!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null)) return;
 
-            entity.teleport(!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null
-                    ? Objects.requireNonNull(defaultWorld).getSpawnLocation()
-                    : ((Player) entity).getRespawnLocation());
+            Location teleportLocation = entity instanceof Player
+                    ? DisableEnd.getPlayerTeleportLocation((Player) entity)
+                    : DisableEnd.getDefaultWorld().getSpawnLocation();
+            if (teleportLocation == null) return;
+            entity.teleport(teleportLocation);
         }
     }
 

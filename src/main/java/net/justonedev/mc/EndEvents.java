@@ -67,9 +67,9 @@ public class EndEvents implements Listener {
         Player p = continueEvent(e);
         if (p == null) return;
         if (!DisableEnd.CURRENT_MSG_DENY_WORLD_TP.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_DENY_WORLD_TP);
-        World defaultWorld = DisableEnd.getDefaultWorld();
-        if (defaultWorld == null && p.getRespawnLocation() == null) return;
-        p.teleport(p.getRespawnLocation() == null ? Objects.requireNonNull(defaultWorld).getSpawnLocation() : p.getRespawnLocation());
+        Location teleportLocation = DisableEnd.getPlayerTeleportLocation(p);
+        if (teleportLocation == null) return;
+        p.teleport(teleportLocation);
     }
 
     @EventHandler
@@ -79,9 +79,9 @@ public class EndEvents implements Listener {
         Player p = continueEvent(e);
         if (p == null) return;
         if (!DisableEnd.CURRENT_MSG_KICK_FROM_END.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_END);
-        World defaultWorld = DisableEnd.getDefaultWorld();
-        if (defaultWorld == null && p.getRespawnLocation() == null) return;
-        p.teleport(p.getRespawnLocation() == null ? Objects.requireNonNull(defaultWorld).getSpawnLocation() : p.getRespawnLocation());
+        Location teleportLocation = DisableEnd.getPlayerTeleportLocation(p);
+        if (teleportLocation == null) return;
+        p.teleport(teleportLocation);
     }
 
     private static Player continueEvent(PlayerEvent e) {
