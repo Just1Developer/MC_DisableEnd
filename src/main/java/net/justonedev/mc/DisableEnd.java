@@ -12,6 +12,7 @@ public final class DisableEnd extends JavaPlugin {
     public static DisableEnd instance;
 
     public static final String DEFAULT_WORLD_NAME = "";
+    public static final boolean DEFAULT_SEND_PLAYERS_TO_WORLD_SPAWN = false;
 
     public static final boolean DEFAULT_END_DISABLED = false;
     public static final boolean DEFAULT_DENY_TELEPORT = true;
@@ -32,6 +33,7 @@ public final class DisableEnd extends JavaPlugin {
     public static final String DEFAULT_MSG_KICK_FROM_NETHER = "&cThe Nether is currently disabled.";
 
     public static String CURRENT_DEFAULT_WORLD_NAME;
+    public static boolean CURRENT_SEND_PLAYERS_TO_WORLD_SPAWN;
 
     public static boolean CURRENT_END_DISABLED;
     public static boolean CURRENT_DENY_TELEPORT;

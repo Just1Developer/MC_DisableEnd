@@ -1,6 +1,5 @@
 package net.justonedev.mc;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -86,11 +85,9 @@ public class NetherEvents implements Listener {
     }
 
     private static void handlePortalEntered(Block portalBlock, Entity entity) {
-        Bukkit.broadcastMessage("1");
         if (!DisableEnd.CURRENT_NETHER_DISABLED) return;
 
         if (isBypass(entity)) return;
-        Bukkit.broadcastMessage("2");
         if (List.of(EntityType.ENDER_PEARL, EntityType.EYE_OF_ENDER).contains(entity.getType())) {
             entity.remove();
         }
@@ -98,18 +95,14 @@ public class NetherEvents implements Listener {
         boolean notInNether = isNotInNether(portalBlock.getWorld());
 
         if ((notInNether || !DisableEnd.CURRENT_ALLOW_NETHER_EXIT) && portalBlock.getType() == Material.NETHER_PORTAL) {
-            Bukkit.broadcastMessage("3 - " + portalBlock);
             // Not in nether -> destroy portal
             breakPortal(portalBlock);
         } else if (!notInNether && DisableEnd.CURRENT_KICK_NETHER_PLAYERS) {
-            Bukkit.broadcastMessage("4");
             // Nether is disabled, but player is in Nether
             if (!DisableEnd.CURRENT_MSG_KICK_FROM_NETHER.isBlank()) entity.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_NETHER);
 
-            Bukkit.broadcastMessage("5");
             World defaultWorld = DisableEnd.getDefaultWorld();
             if (defaultWorld == null && (!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null)) return;
-            Bukkit.broadcastMessage("6");
 
             entity.teleport(!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null
                     ? Objects.requireNonNull(defaultWorld).getSpawnLocation()
@@ -118,17 +111,13 @@ public class NetherEvents implements Listener {
     }
 
     private static void breakPortal(Block portalBlock) {
-        Bukkit.broadcastMessage("§e1");
         Block current = portalBlock;
         do {
-            Bukkit.broadcastMessage("§e2 + Type: " + current.getLocation() + " / Height: " + current.getLocation().getY() + "");
             current = current.getRelative(BlockFace.DOWN);
         } while (current.getType() == Material.NETHER_PORTAL);
-        Bukkit.broadcastMessage("§e3");
         if (current.getType() != Material.OBSIDIAN) return;
 
         // Destroy portal
-        Bukkit.broadcastMessage("§e4");
         current.setType(Material.AIR);
         current.setType(Material.OBSIDIAN);
     }

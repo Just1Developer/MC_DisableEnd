@@ -11,6 +11,7 @@ import java.util.Map;
 public class Config {
 
     private static final String KEY_DEFAULT_WORLD_NAME = "Default world name (if different from the overworld)";
+    private static final String KEY_SEND_PLAYERS_TO_WORLD_SPAWN = "Send players to world spawn (instead of their spawnpoint)";
 
     private static final String KEY_END_DISABLED = "End disabled";
     private static final String KEY_DENY_WORLD_TP = "Deny End World Teleportation";
@@ -34,12 +35,13 @@ public class Config {
 
         if (!f.exists()) {
             // Default Values are already set
-            cfg.set(KEY_DEFAULT_WORLD_NAME, DisableEnd.DEFAULT_END_DISABLED);
+            cfg.set(KEY_DEFAULT_WORLD_NAME, DisableEnd.DEFAULT_WORLD_NAME);
+            cfg.set(KEY_SEND_PLAYERS_TO_WORLD_SPAWN, DisableEnd.DEFAULT_SEND_PLAYERS_TO_WORLD_SPAWN);
 
             cfg.set(KEY_END_DISABLED, DisableEnd.DEFAULT_END_DISABLED);
             cfg.set(KEY_DENY_WORLD_TP, DisableEnd.DEFAULT_DENY_TELEPORT);
             cfg.set(KEY_KICK_PLAYERS, DisableEnd.DEFAULT_KICK_PLAYERS);
-            cfg.set(KEY_BYPASS, DisableEnd.DEFAULT_KICK_PLAYERS);
+            cfg.set(KEY_BYPASS, DisableEnd.DEFAULT_BYPASS_CREATIVE_ADMINS);
             cfg.set(KEY_PARTICLES, DisableEnd.DEFAULT_DO_PARTICLES);
             cfg.set(KEY_SOUND, DisableEnd.DEFAULT_DO_DENY_SOUNDS);
             cfg.set(KEY_MSG_DENY_WORLD_TP, DisableEnd.DEFAULT_MSG_DENY_WORLD_TP);
@@ -58,6 +60,7 @@ public class Config {
         Map<String, Object> updateThese = new HashMap<>();
 
         DisableEnd.CURRENT_DEFAULT_WORLD_NAME = getOrDefaultString(KEY_DEFAULT_WORLD_NAME, cfg, updateThese, DisableEnd.DEFAULT_WORLD_NAME);
+        DisableEnd.CURRENT_SEND_PLAYERS_TO_WORLD_SPAWN = getOrDefaultBoolean(KEY_SEND_PLAYERS_TO_WORLD_SPAWN, cfg, updateThese, DisableEnd.DEFAULT_SEND_PLAYERS_TO_WORLD_SPAWN);
 
         DisableEnd.CURRENT_END_DISABLED = getOrDefaultBoolean(KEY_END_DISABLED, cfg, updateThese, DisableEnd.DEFAULT_END_DISABLED);
         DisableEnd.CURRENT_DENY_TELEPORT = getOrDefaultBoolean(KEY_DENY_WORLD_TP, cfg, updateThese, DisableEnd.DEFAULT_DENY_TELEPORT);
