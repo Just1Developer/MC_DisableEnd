@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +18,7 @@ import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 
+import java.util.List;
 import java.util.Objects;
 
 public class NetherEvents implements Listener {
@@ -27,7 +29,7 @@ public class NetherEvents implements Listener {
             || e.getReason() == PortalCreateEvent.CreateReason.END_PLATFORM) return;
 
         if (!DisableEnd.CURRENT_NETHER_DISABLED) return;
-        if (e.getEntity() instanceof Player && isBypass((Player) e.getEntity())) return;
+        if (e.getEntity() instanceof Player && isBypass(e.getEntity())) return;
         if (e.getWorld().getEnvironment() == World.Environment.NETHER && DisableEnd.CURRENT_ALLOW_NETHER_EXIT) return;
         e.setCancelled(true);
     }
@@ -84,21 +86,30 @@ public class NetherEvents implements Listener {
     }
 
     private static void handlePortalEntered(Block portalBlock, Entity entity) {
+        Bukkit.broadcastMessage("1");
         if (!DisableEnd.CURRENT_NETHER_DISABLED) return;
 
         if (isBypass(entity)) return;
+        Bukkit.broadcastMessage("2");
+        if (List.of(EntityType.ENDER_PEARL, EntityType.EYE_OF_ENDER).contains(entity.getType())) {
+            entity.remove();
+        }
 
         boolean notInNether = isNotInNether(portalBlock.getWorld());
 
         if ((notInNether || !DisableEnd.CURRENT_ALLOW_NETHER_EXIT) && portalBlock.getType() == Material.NETHER_PORTAL) {
+            Bukkit.broadcastMessage("3 - " + portalBlock);
             // Not in nether -> destroy portal
             breakPortal(portalBlock);
         } else if (!notInNether && DisableEnd.CURRENT_KICK_NETHER_PLAYERS) {
+            Bukkit.broadcastMessage("4");
             // Nether is disabled, but player is in Nether
             if (!DisableEnd.CURRENT_MSG_KICK_FROM_NETHER.isBlank()) entity.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_NETHER);
 
+            Bukkit.broadcastMessage("5");
             World defaultWorld = DisableEnd.getDefaultWorld();
             if (defaultWorld == null && (!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null)) return;
+            Bukkit.broadcastMessage("6");
 
             entity.teleport(!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null
                     ? Objects.requireNonNull(defaultWorld).getSpawnLocation()
@@ -107,13 +118,17 @@ public class NetherEvents implements Listener {
     }
 
     private static void breakPortal(Block portalBlock) {
-        Block current;
+        Bukkit.broadcastMessage("§e1");
+        Block current = portalBlock;
         do {
-            current = portalBlock.getRelative(BlockFace.DOWN);
+            Bukkit.broadcastMessage("§e2 + Type: " + current.getLocation() + " / Height: " + current.getLocation().getY() + "");
+            current = current.getRelative(BlockFace.DOWN);
         } while (current.getType() == Material.NETHER_PORTAL);
+        Bukkit.broadcastMessage("§e3");
         if (current.getType() != Material.OBSIDIAN) return;
 
         // Destroy portal
+        Bukkit.broadcastMessage("§e4");
         current.setType(Material.AIR);
         current.setType(Material.OBSIDIAN);
     }
