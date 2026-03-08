@@ -66,7 +66,7 @@ public class EndEvents implements Listener {
         if (!DisableEnd.CURRENT_DENY_TELEPORT) return;
         Player p = continueEvent(e);
         if (p == null) return;
-        if (!DisableEnd.CURRENT_MSG_DENY_WORLD_TP.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_DENY_WORLD_TP);
+        if (DisableEnd.hasText(DisableEnd.CURRENT_MSG_DENY_WORLD_TP)) p.sendMessage(DisableEnd.CURRENT_MSG_DENY_WORLD_TP);
         Location teleportLocation = DisableEnd.getPlayerTeleportLocation(p);
         if (teleportLocation == null) return;
         p.teleport(teleportLocation);
@@ -78,7 +78,7 @@ public class EndEvents implements Listener {
         if (!DisableEnd.CURRENT_KICK_PLAYERS) return;
         Player p = continueEvent(e);
         if (p == null) return;
-        if (!DisableEnd.CURRENT_MSG_KICK_FROM_END.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_END);
+        if (DisableEnd.hasText(DisableEnd.CURRENT_MSG_KICK_FROM_END)) p.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_END);
         Location teleportLocation = DisableEnd.getPlayerTeleportLocation(p);
         if (teleportLocation == null) return;
         p.teleport(teleportLocation);

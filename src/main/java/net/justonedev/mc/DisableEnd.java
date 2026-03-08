@@ -34,27 +34,27 @@ public final class DisableEnd extends JavaPlugin {
     public static final String DEFAULT_MSG_DENY_NETHER_TP = "&7Whew. It was all a dream.";
     public static final String DEFAULT_MSG_KICK_FROM_NETHER = "&cThe Nether is currently disabled.";
 
-    public static String CURRENT_DEFAULT_WORLD_NAME;
-    public static boolean CURRENT_SEND_PLAYERS_TO_WORLD_SPAWN;
+    public static String CURRENT_DEFAULT_WORLD_NAME = DEFAULT_WORLD_NAME;
+    public static boolean CURRENT_SEND_PLAYERS_TO_WORLD_SPAWN = DEFAULT_SEND_PLAYERS_TO_WORLD_SPAWN;
 
-    public static boolean CURRENT_END_DISABLED;
-    public static boolean CURRENT_DENY_TELEPORT;
-    public static boolean CURRENT_KICK_PLAYERS;
+    public static boolean CURRENT_END_DISABLED = DEFAULT_END_DISABLED;
+    public static boolean CURRENT_DENY_TELEPORT = DEFAULT_DENY_TELEPORT;
+    public static boolean CURRENT_KICK_PLAYERS = DEFAULT_KICK_PLAYERS;
 
-    public static boolean CURRENT_NETHER_DISABLED;
-    public static boolean CURRENT_DENY_NETHER_TELEPORT;
-    public static boolean CURRENT_KICK_NETHER_PLAYERS;
-    public static boolean CURRENT_ALLOW_NETHER_EXIT;
+    public static boolean CURRENT_NETHER_DISABLED = DEFAULT_NETHER_DISABLED;
+    public static boolean CURRENT_DENY_NETHER_TELEPORT = DEFAULT_NETHER_DENY_TELEPORT;
+    public static boolean CURRENT_KICK_NETHER_PLAYERS = DEFAULT_NETHER_KICK_PLAYERS;
+    public static boolean CURRENT_ALLOW_NETHER_EXIT = DEFAULT_ALLOW_NETHER_EXIT;
 
-    public static boolean CURRENT_BYPASS_CREATIVE_ADMINS;
-    public static boolean CURRENT_DO_PARTICLES;
-    public static boolean CURRENT_DO_DENY_SOUNDS;
+    public static boolean CURRENT_BYPASS_CREATIVE_ADMINS = DEFAULT_BYPASS_CREATIVE_ADMINS;
+    public static boolean CURRENT_DO_PARTICLES = DEFAULT_DO_PARTICLES;
+    public static boolean CURRENT_DO_DENY_SOUNDS = DEFAULT_DO_DENY_SOUNDS;
 
-    public static String CURRENT_MSG_DENY_WORLD_TP;
-    public static String CURRENT_MSG_KICK_FROM_END;
+    public static String CURRENT_MSG_DENY_WORLD_TP = DEFAULT_MSG_DENY_WORLD_TP;
+    public static String CURRENT_MSG_KICK_FROM_END = DEFAULT_MSG_KICK_FROM_END;
 
-    public static String CURRENT_MSG_DENY_NETHER_TP;
-    public static String CURRENT_MSG_KICK_FROM_NETHER;
+    public static String CURRENT_MSG_DENY_NETHER_TP = DEFAULT_MSG_DENY_NETHER_TP;
+    public static String CURRENT_MSG_KICK_FROM_NETHER = DEFAULT_MSG_KICK_FROM_NETHER;
 
     @Override
     public void onEnable() {
@@ -97,5 +97,9 @@ public final class DisableEnd extends JavaPlugin {
             if (world != null) return world;
         }
         return Bukkit.getWorlds().getFirst();
+    }
+
+    public static boolean hasText(String value) {
+        return value != null && !value.isBlank();
     }
 }

@@ -44,7 +44,7 @@ public class NetherEvents implements Listener {
         if (!DisableEnd.CURRENT_DENY_NETHER_TELEPORT) return;
         Player p = continueEvent(e);
         if (p == null) return;
-        if (!DisableEnd.CURRENT_MSG_DENY_NETHER_TP.isBlank()) p.sendMessage(DisableEnd.CURRENT_MSG_DENY_NETHER_TP);
+        if (DisableEnd.hasText(DisableEnd.CURRENT_MSG_DENY_NETHER_TP)) p.sendMessage(DisableEnd.CURRENT_MSG_DENY_NETHER_TP);
         Location teleportLocation = DisableEnd.getPlayerTeleportLocation(p);
         if (teleportLocation == null) return;
         p.teleport(teleportLocation);
@@ -99,7 +99,7 @@ public class NetherEvents implements Listener {
             breakPortal(portalBlock);
         } else if (!notInNether && DisableEnd.CURRENT_KICK_NETHER_PLAYERS) {
             // Nether is disabled, but player is in Nether
-            if (!DisableEnd.CURRENT_MSG_KICK_FROM_NETHER.isBlank()) entity.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_NETHER);
+            if (DisableEnd.hasText(DisableEnd.CURRENT_MSG_KICK_FROM_NETHER)) entity.sendMessage(DisableEnd.CURRENT_MSG_KICK_FROM_NETHER);
 
             World defaultWorld = DisableEnd.getDefaultWorld();
             if (defaultWorld == null && (!(entity instanceof Player) || ((Player) entity).getRespawnLocation() == null)) return;

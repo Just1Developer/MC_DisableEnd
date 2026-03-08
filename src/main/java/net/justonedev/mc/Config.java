@@ -54,7 +54,6 @@ public class Config {
             cfg.set(KEY_MSG_DENY_NETHER_TP, DisableEnd.DEFAULT_MSG_DENY_NETHER_TP);
             cfg.set(KEY_MSG_KICK_FROM_NETHER, DisableEnd.DEFAULT_MSG_KICK_FROM_NETHER);
             saveCfg(f, cfg);
-            return;
         }
 
         Map<String, Object> updateThese = new HashMap<>();
